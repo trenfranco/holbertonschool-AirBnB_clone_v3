@@ -7,8 +7,15 @@ from api.v1.views import app_views
 from os import environ
 
 
+def not_found(self):
+    """handles 404"""
+    dic = {"error": "Not found"}
+    return jsonify(dic)
+
+
 app = Flask(__name__)
 app.register_blueprint(app_views)
+app.register_error_handler(404, not_found)
 
 
 @app.teardown_appcontext
