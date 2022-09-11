@@ -4,7 +4,7 @@
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 from models import storage
-from models.state import State
+from models.city import City
 from models.state import State
 
 
@@ -60,7 +60,7 @@ def create_city(state_id):
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
-def update_state(city_id):
+def update_city(city_id):
     """updates a city using PUT"""
     if not request.json:
         abort(400, description="Not a JSON")
