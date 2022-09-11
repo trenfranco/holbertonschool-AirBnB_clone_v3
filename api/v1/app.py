@@ -10,7 +10,7 @@ from os import environ
 def not_found(self):
     """handles 404"""
     dic = {"error": "Not found"}
-    return jsonify(dic)
+    return jsonify(dic), 404
 
 
 app = Flask(__name__)
