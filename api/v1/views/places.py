@@ -48,7 +48,7 @@ def delete_place(place_id):
 @app_views.route('/cities/<city_id>/places',
                  methods=['POST'], strict_slashes=False)
 def create_place(city_id):
-    """creates a place using POST"""
+    """creates place"""
     city = storage.get(City, city_id)
     if not city:
         abort(404)
@@ -56,30 +56,31 @@ def create_place(city_id):
         abort(400, description="Not a JSON")
     if 'user_id' not in request.get_json():
         abort(400, description="Missing user_id")
-    info = request.get_json()
-    user = storage.get(User, info['user_id'])
+
+    placeInfo = request.get_json()
+    user = storage.get(User, placeInfo['user_id'])
     if not user:
         abort(404)
     if 'name' not in request.get_json():
         abort(400, description="Missing name")
-    info['city_id'] = city_id
-    d = Place(**info)
-    d.save()
-    return make_response(jsonify(d.to_dict()), 201)
+    placeInfo["city_id"] = city_id
+    data = Place(**placeInfo)
+    data.save()
+    return make_response(jsonify(data.to_dict()), 201)
 
 
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
 def update_place(place_id):
-    """updates place using PUT"""
-    a = storage.get(Place, place_id)
-    if not a:
+    """updates place"""
+    x = storage.get(Place, place_id)
+    if not x:
         abort(404)
-    info = request.get_json()
-    if not info:
+    placeInfo = request.get_json()
+    if not placeInfo:
         abort(400, description="Not a JSON")
-    ignore = ['id', 'created_at', 'updated_at', 'user_id', 'city_id']
-    for k, v in info.items():
-        if k not in ignore:
-            setattr(a, k, v)
+    ignoredKeys = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
+    for key, value in placeInfo.items():
+        if key not in ignoredKeys:
+            setattr(x, key, value)
     storage.save()
-    return make_response(jsonify(a.to_dict()), 200)
+    return make_response(jsonify(x.to_dict()), 200)
