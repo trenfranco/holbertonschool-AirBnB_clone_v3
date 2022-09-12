@@ -1,7 +1,8 @@
 #!/usr/bin/python3
-"""task 0 starting api"""
+"""last task added cors"""
 
 from flask import Flask, jsonify
+from flask_cors import CORS
 from models import storage
 from api.v1.views import app_views
 from os import environ
@@ -14,13 +15,14 @@ def not_found(self):
 
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 app.register_blueprint(app_views)
 app.register_error_handler(404, not_found)
 
 
 @app.teardown_appcontext
 def teadown(self):
-    """handle teardown"""
+    """manage teardown"""
     storage.close()
 
 if __name__ == "__main__":
