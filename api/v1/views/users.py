@@ -43,8 +43,10 @@ def create_user():
     """creates a user using POST"""
     if not request.get_json():
         abort(400, description="Not a JSON")
-    if 'name' not in request.get_json():
-        abort(400, description="Missing name")
+    if 'email' not in request.get_json():
+        abort(400, description="Missing email")
+    if 'password' not in request.get_json():
+        abort(400, description="Missing password")
     info = request.get_json()
     d = User(**info)
     d.save()
