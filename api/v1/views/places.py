@@ -74,10 +74,10 @@ def update_place(place_id):
     a = storage.get(Place, place_id)
     if not a:
         abort(404)
-    if not request.get_json():
+    info = request.get_json()
+    if not info:
         abort(400, description="Not a JSON")
     ignore = ['id', 'created_at', 'updated_at', 'user_id', 'city_id']
-    info = request.get_json()
     for k, v in info.items():
         if k not in ignore:
             setattr(a, k, v)
