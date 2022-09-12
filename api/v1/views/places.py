@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""amenity object data view API RESTful"""
+"""view for places objects API REST"""
 
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
@@ -13,34 +13,32 @@ from models.user import User
 
 @app_views.route('/cities/<city_id>/places',
                  methods=['GET'], strict_slashes=False)
-def list_places(city_id):
-    """returns all places using GET"""
-    pl = []
+def retrieve_places(city_id):
+    """retrieves all plces in city"""
     city = storage.get(City, city_id)
     if not city:
-        aport(404)
-    for a in city.places:
-        pl.append(a.to_dict())
-    return jsonify(pl)
+        abort(404)
+    places = [place.to_dict() for place in city.places]
+    return jsonify(places)
 
 
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
-def list_place(place_id):
-    """returns a specific place using GET"""
-    a = storage.get(Place, place_id)
-    if not a:
+def retrieve_place(place_id):
+    """retrieves one place"""
+    x = storage.get(Place, place_id)
+    if not x:
         abort(404)
-    return jsonify(a.to_dict())
+    return jsonify(x.to_dict())
 
 
 @app_views.route('/places/<place_id>',
                  methods=['DELETE'], strict_slashes=False)
 def delete_place(place_id):
-    """deletes a place using DELETE"""
-    a = storage.get(Place, place_id)
-    if not a:
+    """deletes place"""
+    x = storage.get(Place, place_id)
+    if not x:
         abort(404)
-    storage.delete(a)
+    storage.delete(x)
     storage.save()
     return make_response(jsonify({}), 200)
 
