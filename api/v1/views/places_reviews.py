@@ -12,7 +12,7 @@ from models.user import User
 
 
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
-def retrieve_place(place_id):
+def ret_place(place_id):
     """json returns one place"""
     x = storage.get(Place, place_id)
     if not x:
@@ -75,7 +75,7 @@ def update_place(place_id):
 
 @app_views.route('/cities/<city_id>/places',
                  methods=['GET'], strict_slashes=False)
-def retrieve_places(city_id):
+def rev_places(city_id):
     """returns all places in a specific city"""
     city = storage.get(City, city_id)
     if not city:

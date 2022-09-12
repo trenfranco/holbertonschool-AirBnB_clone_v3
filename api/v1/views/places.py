@@ -13,8 +13,8 @@ from models.user import User
 
 @app_views.route('/cities/<city_id>/places',
                  methods=['GET'], strict_slashes=False)
-def retrieve_places(city_id):
-    """retrieves all plces in city"""
+def retrunss_places(city_id):
+    """return all plces in city"""
     city = storage.get(City, city_id)
     if not city:
         abort(404)
@@ -23,8 +23,8 @@ def retrieve_places(city_id):
 
 
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
-def retrieve_place(place_id):
-    """retrieves one place"""
+def return_place(place_id):
+    """returns one place"""
     x = storage.get(Place, place_id)
     if not x:
         abort(404)
@@ -33,7 +33,7 @@ def retrieve_place(place_id):
 
 @app_views.route('/places/<place_id>',
                  methods=['DELETE'], strict_slashes=False)
-def delete_place(place_id):
+def delete_placee(place_id):
     """deletes place"""
     x = storage.get(Place, place_id)
     if not x:
@@ -45,7 +45,7 @@ def delete_place(place_id):
 
 @app_views.route('/cities/<city_id>/places',
                  methods=['POST'], strict_slashes=False)
-def create_place(city_id):
+def createee_place(city_id):
     """creates place"""
     city = storage.get(City, city_id)
     if not city:
@@ -68,7 +68,7 @@ def create_place(city_id):
 
 
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
-def update_place(place_id):
+def updatee_place(place_id):
     """updates place"""
     x = storage.get(Place, place_id)
     if not x:
